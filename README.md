@@ -174,10 +174,12 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
   - To enable extra logging (with more detailed context):
     ```bash
     gcc -DDEBUG -o wakey wakey.c -pthread
+    ```
     
   - To enable stack trace generation on errors (for POSIX systems):
     ```bash
     gcc -DDEBUG -DENABLE_STACKTRACE -o wakey wakey.c -pthread
+    ```
 
 - **Cross–Platform Considerations:**
   - **POSIX Systems:** Uses pthread for threading, syslog for log messaging (if no log file is provided), and native socket APIs for network operations.

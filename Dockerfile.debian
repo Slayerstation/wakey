@@ -14,11 +14,11 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /src
 
 # Copy the source and tests into the image
-COPY wakey19.c .
+COPY wakey.c .
 COPY tests/ ./tests/
 
 # Compile the application
-RUN gcc -o wakey wakey19.c -lpthread
+RUN gcc -o wakey wakey.c -lpthread
 
 # Optionally compile unit tests (if you want to run them inside the container)
 RUN gcc -DUNIT_TEST -o test_unit tests/test_unit.c -lpthread

@@ -12,11 +12,11 @@ ENV PATH="C:\\tools\\mingw64\\bin;${PATH}"
 WORKDIR C:/src
 
 # Copy the source code and test files into the container.
-COPY wakey19.c .
+COPY wakey.c .
 COPY tests/ tests/
 
 # Compile the application using gcc.
-RUN ["powershell", "-Command", "gcc -o wakey.exe wakey19.c -lpthread"]
+RUN ["powershell", "-Command", "gcc -o wakey.exe wakey.c -lpthread"]
 
 # Run the application.
 CMD ["cmd", "/C", "wakey.exe"]

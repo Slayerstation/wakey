@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  wakey-windows:
+    build:
+      context: .
+      dockerfile: Dockerfile.windows
+    container_name: wakey-windows
+    tty: true
+    platform: windows
+    restart: unless-stopped
+
+  wakey-debian:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+    container_name: wakey-debian
+    tty: true
+    restart: unless-stopped

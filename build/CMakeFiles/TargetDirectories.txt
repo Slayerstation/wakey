@@ -1,0 +1,3 @@
+C:/Users/van Houten/workflow_programs/wakey/wakey_final/build/CMakeFiles/wakey.dir
+C:/Users/van Houten/workflow_programs/wakey/wakey_final/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/van Houten/workflow_programs/wakey/wakey_final/build/CMakeFiles/ZERO_CHECK.dir
