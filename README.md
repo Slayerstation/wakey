@@ -187,6 +187,9 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
 
 - **Make**
   ```bash
+  mkdir build
+  ```
+  ```bash
   cd build
   ```
   ```bash
