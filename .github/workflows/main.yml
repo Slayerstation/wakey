@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-tests:
+    name: Unit Tests (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y gcc make
+      - name: Build unit tests
+        run: gcc -DUNIT_TEST -o test_unit tests/test_unit.c -lpthread
+      - name: Run unit tests
+        run: ./test_unit
+
+  build-debian:
+    name: Build and Test Debian Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Debian Docker Image
+        run: docker build -t wakey-debian -f Dockerfile.debian .
+      - name: Run Debian Integration Test
+        run: docker run --rm wakey-debian /src/tests/test_integration.sh
+
+  build-windows:
+    name: Build Windows Docker Image
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Windows Docker Image
+        run: docker build -t wakey-windows -f Dockerfile.windows .
+      # Optionally run the container if your Windows container configuration supports it.
+      - name: Run Windows container
+        run: docker run --rm wakey-windows
