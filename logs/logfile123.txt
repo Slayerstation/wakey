@@ -1,6 +1,0 @@
-[2025-04-30 19:34:50] INFO: Starting enterprise_wakey6
-[2025-04-30 19:34:50] INFO: No existing ARP cache file found (arp_cache.txt)
-[2025-04-30 19:34:50] INFO: WOL packet sent to broadcast 255.255.255.255 (target MAC: 6c:02:e0:3e:91:2f)
-[2025-04-30 19:35:07] INFO: Reverse ARP: Found IP 192.168.1.77 and hostname Administrator for MAC 6c:02:e0:3e:91:2f
-[2025-04-30 19:35:07] DEBUG: Flushed ARP cache to file.
-[2025-04-30 19:35:07] INFO: Exiting enterprise_wakey6
