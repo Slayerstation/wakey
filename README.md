@@ -139,12 +139,14 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
 
   ```bash
   ./wakey 192.168.1.50
+  ```
 
   The application attempts to resolve the MAC address for 192.168.1.50 (using ARP or a cache entry) before sending the WoL packet with the default broadcast address.
 
 - **Example 2: Specifying a Broadcast IP, Network Interface, and ARP Cache File**
   ```bash
   ./wakey -b 10.0.0.255 -i eth0 -c /path/to/arp_cache.txt 192.168.0.10
+  ```
   This command sets:
   - Broadcast IP to 10.0.0.255
   - Network interface to eth0
@@ -153,14 +155,18 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
 - **Example 3: Logging to a File with Remote Logging Enabled**
   ```bash
   ./wakey --logfile /var/log/wakey.log --remote 192.168.1.100:514 00:1A:2B:3C:4D:5E
+  ```
 
   Logs are directed to /var/log/wakey.log while simultaneously sending remote log messages to 192.168.1.100 on port 514. The provided target is a MAC address, used directly without ARP resolution.
 
 - **Example 4: Processing Multiple IP-Addresses/MAC-Addresses from a File (In this case, 'targets.txt')**
   ```bash
   ./wakey targets.txt
+  ```
 
   If targets.txt contains multiple targets (IP addresses, hostnames, or MAC addresses on separate lines), the application processes each target sequentially.
+
+---
 
 ## Compilation and Configuration
 
