@@ -185,3 +185,11 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
   - **POSIX Systems:** Uses pthread for threading, syslog for log messaging (if no log file is provided), and native socket APIs for network operations.
   - **Windows:** Uses Windows Critical Sections, the Windows Event Log for logging (if no log file is provided), and Winsock for network operations.
 
+- **Make**
+  ```bash
+  cd build
+  ```
+  ```bash
+  cmake ..
+  ```
+
