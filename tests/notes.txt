@@ -1,0 +1,4 @@
+gcc -DUNIT_TEST -o test_unit tests/test_unit.c -lpthread
+./test_unit
+
+chmod +x tests/test_integration.sh
