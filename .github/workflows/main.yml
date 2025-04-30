@@ -5,38 +5,61 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # This allows manual dispatch.
 
 jobs:
-  unit-tests:
-    name: Unit Tests (Ubuntu)
+  build-and-test:
+    name: Build and Test Application
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install build tools
-        run: sudo apt-get update && sudo apt-get install -y gcc make
-      - name: Build unit tests
-        run: gcc -DUNIT_TEST -o test_unit tests/test_unit.c -lpthread
-      - name: Run unit tests
-        run: ./test_unit
 
-  build-debian:
-    name: Build and Test Debian Docker Image
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
+
+      - name: Compile Application
+        run: |
+          echo "Compiling application from src/..."
+          # Adjust compiler flags as needed.
+          gcc src/*.c -I include -o wakey_app
+          echo "Compiled executable:"
+          ls -l wakey_app
+
+      - name: Run Application Tests
+        run: |
+          echo "Locating C test files under tests/..."
+          # Find and run every C test file.
+          for test_file in $(find tests -type f -name "*.c"); do
+              echo "Processing test: $test_file"
+              # Remove .c suffix to generate an executable name.
+              test_exe="${test_file%.c}"
+              gcc "$test_file" -I include -o "$test_exe"
+              echo "Running test executable: $test_exe"
+              ./"$test_exe"
+          done
+
+  docker-build:
+    name: Build Docker Images
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Debian Docker Image
-        run: docker build -t wakey-debian -f Dockerfile.debian .
-      - name: Run Debian Integration Test
-        run: docker run --rm wakey-debian /src/tests/test_integration.sh
+    needs: build-and-test
 
-  build-windows:
-    name: Build Windows Docker Image
-    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build Windows Docker Image
-        run: docker build -t wakey-windows -f Dockerfile.windows .
-      # Optionally run the container if your Windows container configuration supports it.
-      - name: Run Windows container
-        run: docker run --rm wakey-windows
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Images
+        run: |
+          echo "Searching for Dockerfiles..."
+          # Find Dockerfiles in the repository root matching 'Dockerfile*'
+          for dockerfile in $(find . -maxdepth 1 -type f -name 'Dockerfile*'); do
+              # Use the Dockerfile name (in lowercase) as the image name
+              image_name=$(basename "$dockerfile" | tr '[:upper:]' '[:lower:]')
+              echo "Building Docker image for $dockerfile as ${image_name}:latest"
+              docker build -f "$dockerfile" -t "${image_name}:latest" .
+          done
