@@ -169,6 +169,9 @@ Wakey is a cross–platform utility that sends Wake-on-LAN (WoL) magic packets t
 ---
 
 ## Compilation and Configuration
+  ```bash
+  gcc wakey.c -o wakey.exe -lws2_32 -lIphlpapi -lnetapi32
+  ```
 
 - **Compilation Options:**
   - To enable extra logging (with more detailed context):
